@@ -54,10 +54,8 @@ public class EditYourNote extends AppCompatActivity implements TextWatcher {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.gregfunk.androidnotes", Context.MODE_PRIVATE);
 
         if (MainActivity.set == null) {
-            Log.i("on save", " set is null");
             MainActivity.set = new HashSet<String>();
         } else {
-            Log.i("on save", " set is NOT null");
             MainActivity.set.clear();
         }
         MainActivity.set.addAll(MainActivity.notes);

@@ -37,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.gregfunk.androidnotes", Context.MODE_PRIVATE);
-        set = sharedPreferences.getStringSet("notes", null);
+        set = new HashSet<String>();
+        set.addAll(sharedPreferences.getStringSet("notes", null));
         notes.clear();
-        if (set != null) {
-            Log.i("on create", " set is null");
+        if (set.size() != 0) {
             notes.addAll(set);
         } else {
-            Log.i("on create", " set is NOT null");
             notes.add("Example note");
             set = new HashSet<String>();
             set.addAll(notes);
