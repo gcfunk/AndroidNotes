@@ -1,11 +1,13 @@
 package com.example.gregfunk.androidnotes;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -58,6 +60,37 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), EditYourNote.class);
                 i.putExtra("noteId", position);
                 startActivity(i);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you want to delete this note?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                notes.remove(position);
+                                arrayAdapter.notifyDataSetChanged();
+
+                                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.gregfunk.androidnotes", Context.MODE_PRIVATE);
+
+                                if (set == null) {
+                                    set = new HashSet<String>();
+                                } else {
+                                    set.clear();
+                                }
+                                set.addAll(notes);
+                                sharedPreferences.edit().putStringSet("notes", set).apply();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+
+                return true;
             }
         });
     }
