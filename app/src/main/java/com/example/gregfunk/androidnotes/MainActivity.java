@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
         set = sharedPreferences.getStringSet("notes", null);
         notes.clear();
         if (set != null) {
+            Log.i("on create", " set is null");
             notes.addAll(set);
         } else {
+            Log.i("on create", " set is NOT null");
             notes.add("Example note");
             set = new HashSet<String>();
             set.addAll(notes);
