@@ -77,8 +77,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.add) {
+            notes.add("");
+
+            Intent i = new Intent(getApplicationContext(), EditYourNote.class);
+            i.putExtra("noteId", notes.size() - 1);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
